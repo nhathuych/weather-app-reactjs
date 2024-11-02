@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Temperature() {
+function Temperature({setLocation, stats}) {
   const handleLocationChange = (e) => {
-    console.log(e.target.value)
+    setLocation(e.target.value)
   }
 
   return (
@@ -10,9 +10,10 @@ function Temperature() {
       <div className='flex justify-between'>
         <input
           type='text'
-          className=' text-md bg-slate-600 border border-slate-500 text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-400 w-52 p-2'
+          className=' text-md bg-slate-600 border border-slate-500 text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-400 w-4/5 p-2'
           placeholder='Enter your localtion...'
-          onChange={handleLocationChange}
+          onKeyDown={(e) => { if (e.key === 'Enter') { handleLocationChange(e) } }}
+          defaultValue='Sai Gon'
         />
         <div className='m-4'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6 text-transform scale-100 hover:scale-125 transition-transform duration-300 ease-in-out">
@@ -23,26 +24,27 @@ function Temperature() {
       </div>
 
       <div className='flex justify-center mt-8'>
-        {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-14 text-transform scale-100 hover:scale-x-150 transition-transform duration-300 ease-in-out">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-        </svg> */}
-
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-12 text-transform scale-100 hover:scale-150 transition-transform duration-300 ease-in-out">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
-        </svg>
+        { stats.isDay !== 0 ?
+          (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-14 text-yellow-400 text-transform scale-100 hover:scale-150 transition-transform duration-300 ease-in-out">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          </svg>) :
+          (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-12 text-slate-200 text-transform scale-100 hover:scale-150 transition-transform duration-300 ease-in-out">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>)
+        }
       </div>
 
-      <div className='flex justify-center items-center text-slate-200  text-transform scale-100 hover:scale-110 transition-transform duration-300 ease-in-out mt-7'>
-        <p className='font-semibold text-5xl'>23</p>
+      <div className='flex justify-center items-center text-slate-200 text-transform scale-100 hover:scale-110 transition-transform duration-300 ease-in-out mt-7'>
+        <p className='font-semibold text-5xl'>{stats.temp_c}</p>
         <span className='text-3xl'>°C</span>
       </div>
 
-      <div className='flex justify-center items-center text-2xl text-slate-300  text-transform scale-100 hover:scale-110 transition-transform duration-300 ease-in-out mt-7'>
-        Mist
+      <div className='flex justify-center items-center text-2xl text-slate-300 text-transform scale-100 hover:scale-110 transition-transform duration-300 ease-in-out mt-7'>
+        {stats.condition}
       </div>
 
-      <div className='flex justify-center text-sm text-slate-400  text-transform scale-100 hover:scale-110 transition-transform duration-300 ease-in-out mt-5'>
-        Today - 2024-11-12-22:51 | Sai Gon
+      <div className='flex justify-center text-sm text-slate-400 text-transform scale-100 hover:scale-110 transition-transform duration-300 ease-in-out mt-5'>
+        Today &#183; {stats.time} | {stats.location}
       </div>
     </>
   )
