@@ -2,7 +2,9 @@ import React from 'react'
 
 function App() {
   return (
-    <div>Hello ReactJS</div>
+    <div>
+      <h1 className='text-purple-950'>Hello ReactJS</h1>
+    </div>
   )
 }
 
